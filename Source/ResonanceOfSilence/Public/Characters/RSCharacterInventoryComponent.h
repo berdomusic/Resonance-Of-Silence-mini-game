@@ -17,7 +17,7 @@ public:
 	// Sets default values for this component's properties
 	URSCharacterInventoryComponent();
 
-	bool bCanPickUpItem();
+	bool CanPickUpItem();
 	void OnPickUpItem(ARSPickableItem* InItem);
 	void OnDropItem(ARSPickableItem* InItem);
 

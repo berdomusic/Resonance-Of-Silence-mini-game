@@ -67,7 +67,7 @@ void ARSSoundChargedCrystal::FrequencyPuzzleSetup(bool bInBind, ARSFrequencyPuzz
 
 void ARSSoundChargedCrystal::SetupEffectsSpline(const TArray<FVector>& InTargetPoints) const
 {
-	check(EffectsSpline)
+	check(EffectsSpline);
 	EffectsSpline->SetupJumpingSpline(InTargetPoints);
 }
 
@@ -75,12 +75,6 @@ void ARSSoundChargedCrystal::PickUp(ARSCharacter* InInstigator)
 {
 	Super::PickUp(InInstigator);
 	UpdateTransmittedSoundData(CurrentTransmittedSoundData);
-}
-
-void ARSSoundChargedCrystal::InitVFXSplineSetup(const FVector& InInitTargetLocation)
-{
-	check(EffectsSpline)
-	EffectsSpline->InitSetupJumpingSpline(InInitTargetLocation);
 }
 
 void ARSSoundChargedCrystal::OnPuzzleSolved()

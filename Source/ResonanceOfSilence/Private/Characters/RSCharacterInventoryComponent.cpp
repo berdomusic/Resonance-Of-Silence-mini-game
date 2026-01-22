@@ -15,8 +15,9 @@ URSCharacterInventoryComponent::URSCharacterInventoryComponent()
 	// ...
 }
 
-bool URSCharacterInventoryComponent::bCanPickUpItem()
+bool URSCharacterInventoryComponent::CanPickUpItem()
 {
+	//#mc temp
 	return true;
 }
 

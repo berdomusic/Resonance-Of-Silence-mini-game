@@ -48,7 +48,7 @@ void ARSPickableItem::TryInteract(ARSCharacter* InInstigator)
 			return;
 		}
 	}
-	if (!bCanBePickedUp || !inventory->bCanPickUpItem())
+	if (!bCanBePickedUp || !inventory->CanPickUpItem())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Can't pick up item"));
 		return;

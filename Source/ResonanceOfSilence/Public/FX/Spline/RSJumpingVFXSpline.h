@@ -17,7 +17,6 @@ class RESONANCEOFSILENCE_API URSJumpingVFXSpline : public URSEffectsSplineCompon
 	URSJumpingVFXSpline();
 public:
 	
-	void InitSetupJumpingSpline(const FVector& InInitTargetLocation);
 	void SetupJumpingSpline(const TArray<FVector>& InTargetPoints);	
 	
 	bool bCanJump = true;
@@ -39,8 +38,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Setup)
 	FVector PreTargetOffset = FVector(0,0,100.f);
 
+	UPROPERTY(BlueprintReadOnly)
 	FVector CurrentStart;
+	UPROPERTY(BlueprintReadOnly)
 	FVector CurrentTarget;
+	UPROPERTY(BlueprintReadOnly)
 	TArray<FVector> TargetPoints;
 
 	float CurrentLerp;

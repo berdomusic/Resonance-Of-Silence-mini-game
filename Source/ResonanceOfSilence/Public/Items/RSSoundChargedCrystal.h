@@ -33,9 +33,6 @@ public:
 	
 	virtual void PickUp(ARSCharacter* InInstigator) override;
 
-	UFUNCTION(BlueprintCallable)
-	void InitVFXSplineSetup(const FVector& InInitTargetLocation);
-
 	UFUNCTION(BlueprintNativeEvent)
 	void OnChargeStarted();
 	UFUNCTION(BlueprintNativeEvent)

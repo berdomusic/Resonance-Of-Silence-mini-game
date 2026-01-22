@@ -16,20 +16,16 @@ URSJumpingVFXSpline::URSJumpingVFXSpline()
 	AddSplinePoint(FVector(100.f, 0.f, 0.f), ESplineCoordinateSpace::Local);
 }
 
-void URSJumpingVFXSpline::InitSetupJumpingSpline(const FVector& InInitTargetLocation)
-{
-	CurrentTarget = InInitTargetLocation;
-}
-
 void URSJumpingVFXSpline::SetupJumpingSpline(const TArray<FVector>& InTargetPoints)
 {
 	SetComponentTickEnabled(true);
 	if (bManualPointsSetup) return;
 
-	check(InTargetPoints.Num() == NumberOfTargetPoints)
+	check(InTargetPoints.Num() == NumberOfTargetPoints);
 	TargetPoints.Empty();
 	TargetPoints = InTargetPoints;
-	SetNewPositionsForSplinePoints();	
+	CurrentTarget = TargetPoints[CurrentStepIdx];
+	SetNewPositionsForSplinePoints();
 	
 	ActivateVFX();
 
