@@ -133,6 +133,7 @@ void ARSSoundChargedCrystal::StopSound_Implementation()
 	{
 		bWasPreviouslyCharged = false;
 		OnChargeFullyDepleted.Broadcast();
+		SetPlayable(false);
 		EffectsSpline->OnChargeDepleted();
 	}
 }

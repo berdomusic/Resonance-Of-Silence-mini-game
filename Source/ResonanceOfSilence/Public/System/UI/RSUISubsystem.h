@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "UI/RSUserWidget.h"
+#include "UI/RSGameplayWidget.h"
 #include "RSUISubsystem.generated.h"
 
 /**
@@ -22,19 +23,19 @@ public:
 	void UnregisterUserWidget(URSUserWidget* InWidget);
 
 	UPROPERTY()
-	TArray<TWeakObjectPtr<URSUserWidget>> ActiveWidgets;	
+	TArray<TWeakObjectPtr<URSUserWidget>> ActiveWidgets;
+	UPROPERTY()
+	TArray<URSGameplayWidget*> HiddenGameplayWidgets;
 
 	UFUNCTION(BlueprintCallable)
-	void SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder = 0);
+	void SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder = 0, bool bPreserveWidgets = false);
+	UFUNCTION(BlueprintCallable)
+	void AddOptionsWidget(URSUserWidget* InOptionsWidget, bool bHideGameplayWidgets = true);
+	UFUNCTION(BlueprintCallable)
+	void RemoveOptionsWidget(URSUserWidget* InOptionsWidget, bool bRestoreHiddenGameplayWidgets = true);
 	UFUNCTION(BlueprintCallable)
 	void RemoveWidgetFromViewport(URSUserWidget* InWidget);
 
 	UPROPERTY(BlueprintReadOnly)
 	URSUserWidget* CurrentWidget;
-
-	UFUNCTION(BlueprintCallable)
-	void AddTooltipWidget(URSTooltipEntry* InTooltip);
-
-	UFUNCTION(BlueprintCallable)
-	void CreateTooltipWidgetFromRowHandle(UObject* WorldContextObject, const FDataTableRowHandle& TooltipRowHandle);
 };

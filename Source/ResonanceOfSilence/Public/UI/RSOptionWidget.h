@@ -16,11 +16,11 @@ class RESONANCEOFSILENCE_API URSOptionWidget : public URSMenuWidget
 {
 	GENERATED_BODY()
 public:
-	void UpdateInternals();
+	void UpdateInternalVariables();
 	void NativeConstruct() override;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void ApplySettings();
+	void ApplyInternalSettings();
 
 	UPROPERTY(BlueprintReadWrite)
 	FRSGameplayUserSettings InternalTemp_GameplayUserSettings;

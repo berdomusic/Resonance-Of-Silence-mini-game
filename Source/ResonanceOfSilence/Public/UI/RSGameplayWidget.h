@@ -3,15 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RSGameplayWidget.h"
 #include "UI/RSUserWidget.h"
-#include "RSItemHUDWidget.generated.h"
+#include "RSGameplayWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RESONANCEOFSILENCE_API URSItemHUDWidget : public URSGameplayWidget
+class RESONANCEOFSILENCE_API URSGameplayWidget : public URSUserWidget
 {
 	GENERATED_BODY()
 	

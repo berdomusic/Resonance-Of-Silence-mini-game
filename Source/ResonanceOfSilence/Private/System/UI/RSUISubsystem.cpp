@@ -41,23 +41,8 @@ void URSUISubsystem::UnregisterUserWidget(URSUserWidget* InWidget)
 	);	
 }
 
-void URSUISubsystem::SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder)
+void URSUISubsystem::SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder, bool bPreserveWidgets)
 {	
-	/*ARSPlayerController* RSPlayerController = URSCharacterFunctionLibrary::GetPlayerController(this);
-	check(RSPlayerController)
-	if (CurrentWidget)
-	{
-		RemoveWidgetFromViewport(CurrentWidget);
-		//CurrentWidget = nullptr;
-	}
-	if (!InWidget)
-		return;
-	if (const TSubclassOf<URSUserWidget> WidgetClass = InWidget->GetClass())
-	{
-		CurrentWidget = CreateWidget<URSUserWidget>(RSPlayerController, WidgetClass);
-		InWidget->AddToViewport(InZOrder);
-	}*/
-	
 	ARSPlayerController* RSPlayerController = URSCharacterFunctionLibrary::GetPlayerController(this);
 	if (!ensure(RSPlayerController))
 		return;
@@ -75,6 +60,39 @@ void URSUISubsystem::SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrde
 	CurrentWidget->AddToViewport(InZOrder);
 }
 
+void URSUISubsystem::AddOptionsWidget(URSUserWidget* InOptionsWidget, bool bHideGameplayWidgets)
+{
+	if (bHideGameplayWidgets)
+	{
+		for (const TWeakObjectPtr<URSUserWidget>& widgetPtr : ActiveWidgets)
+		{
+			if (widgetPtr.IsValid())
+			{
+				if (URSGameplayWidget* gameplayWidget = Cast<URSGameplayWidget>(widgetPtr.Get()))
+				{
+					HiddenGameplayWidgets.AddUnique(gameplayWidget);
+					gameplayWidget->SetVisibility(ESlateVisibility::Hidden);
+				}
+			}
+		}
+	}
+	CurrentWidget = InOptionsWidget;
+	CurrentWidget->AddToViewport(0);
+}
+
+void URSUISubsystem::RemoveOptionsWidget(URSUserWidget* InOptionsWidget, bool bRestoreHiddenGameplayWidgets)
+{
+	if (bRestoreHiddenGameplayWidgets && !HiddenGameplayWidgets.IsEmpty())
+	{
+		for (URSGameplayWidget* gameplayWidget : HiddenGameplayWidgets)
+		{
+			gameplayWidget->SetVisibility(ESlateVisibility::Visible);
+		}
+		HiddenGameplayWidgets.Empty();
+	}
+	RemoveWidgetFromViewport(InOptionsWidget);
+}
+
 void URSUISubsystem::RemoveWidgetFromViewport(URSUserWidget* InWidget)
 {
 	if (!InWidget)
@@ -83,18 +101,4 @@ void URSUISubsystem::RemoveWidgetFromViewport(URSUserWidget* InWidget)
 	check(RSPlayerController)
 	InWidget->RemoveFromParent();
 	CurrentWidget = nullptr;
-}
-
-void URSUISubsystem::AddTooltipWidget(URSTooltipEntry* InTooltip)
-{
-	
-
-	InTooltip->AddToViewport();
-}
-
-void URSUISubsystem::CreateTooltipWidgetFromRowHandle(UObject* WorldContextObject, const FDataTableRowHandle& TooltipRowHandle)
-{
-	/*check(WidgetClass)
-	// tooltips are designed to manage their destruction
-	ensure(WidgetClass->TooltipHandle.Lifetime > 0.f || WidgetClass->IsWidgetFading());*/
 }

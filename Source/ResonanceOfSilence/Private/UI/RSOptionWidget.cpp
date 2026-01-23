@@ -1,11 +1,11 @@
 ﻿#include "UI/RSOptionWidget.h"
 
-void URSOptionWidget::ApplySettings_Implementation()
+void URSOptionWidget::ApplyInternalSettings_Implementation()
 {
-	UpdateInternals();
+	UpdateInternalVariables();
 }
 
-void URSOptionWidget::UpdateInternals()
+void URSOptionWidget::UpdateInternalVariables()
 {
 	InternalTemp_GameplayUserSettings = URSGameUserSettingsFunctionLibrary::GetGameplayUserSettings();
 	InternalTemp_ControlsUserSettings = URSGameUserSettingsFunctionLibrary::GetControlsUserSettings();
@@ -17,5 +17,5 @@ void URSOptionWidget::UpdateInternals()
 void URSOptionWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	UpdateInternals();
+	UpdateInternalVariables();
 }
