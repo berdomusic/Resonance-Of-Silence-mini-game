@@ -41,25 +41,6 @@ void URSUISubsystem::UnregisterUserWidget(URSUserWidget* InWidget)
 	);	
 }
 
-void URSUISubsystem::SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder, bool bPreserveWidgets)
-{	
-	ARSPlayerController* RSPlayerController = URSCharacterFunctionLibrary::GetPlayerController(this);
-	if (!ensure(RSPlayerController))
-		return;
-	
-	if (IsValid(CurrentWidget))
-	{
-		RemoveWidgetFromViewport(CurrentWidget);
-		CurrentWidget = nullptr;
-	}
-    
-	if (!IsValid(InWidget))
-		return;
-	
-	CurrentWidget = InWidget;
-	CurrentWidget->AddToViewport(InZOrder);
-}
-
 void URSUISubsystem::AddOptionsWidget(URSUserWidget* InOptionsWidget, bool bHideGameplayWidgets)
 {
 	if (bHideGameplayWidgets)
@@ -76,8 +57,7 @@ void URSUISubsystem::AddOptionsWidget(URSUserWidget* InOptionsWidget, bool bHide
 			}
 		}
 	}
-	CurrentWidget = InOptionsWidget;
-	CurrentWidget->AddToViewport(0);
+	InOptionsWidget->AddToViewport(0);
 }
 
 void URSUISubsystem::RemoveOptionsWidget(URSUserWidget* InOptionsWidget, bool bRestoreHiddenGameplayWidgets)
@@ -100,5 +80,4 @@ void URSUISubsystem::RemoveWidgetFromViewport(URSUserWidget* InWidget)
 	const ARSPlayerController* RSPlayerController = URSCharacterFunctionLibrary::GetPlayerController(this);
 	check(RSPlayerController)
 	InWidget->RemoveFromParent();
-	CurrentWidget = nullptr;
 }

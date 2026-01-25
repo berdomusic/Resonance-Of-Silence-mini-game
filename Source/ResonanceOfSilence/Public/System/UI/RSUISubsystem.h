@@ -26,16 +26,11 @@ public:
 	TArray<TWeakObjectPtr<URSUserWidget>> ActiveWidgets;
 	UPROPERTY()
 	TArray<URSGameplayWidget*> HiddenGameplayWidgets;
-
-	UFUNCTION(BlueprintCallable)
-	void SwapWidgetInViewport(URSUserWidget* InWidget, int32 InZOrder = 0, bool bPreserveWidgets = false);
+	
 	UFUNCTION(BlueprintCallable)
 	void AddOptionsWidget(URSUserWidget* InOptionsWidget, bool bHideGameplayWidgets = true);
 	UFUNCTION(BlueprintCallable)
 	void RemoveOptionsWidget(URSUserWidget* InOptionsWidget, bool bRestoreHiddenGameplayWidgets = true);
 	UFUNCTION(BlueprintCallable)
 	void RemoveWidgetFromViewport(URSUserWidget* InWidget);
-
-	UPROPERTY(BlueprintReadOnly)
-	URSUserWidget* CurrentWidget;
 };
