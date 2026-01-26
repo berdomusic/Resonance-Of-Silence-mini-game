@@ -46,11 +46,8 @@ void URSCheatManager::AddEnumDebug(TArray<FAutoCompleteCommand>& InAutoCompleteL
 {
 	check(InEnum);
 
-	for (int32 i = 0; i < InEnum->NumEnums(); ++i)
+	for (int32 i = 0; i < InEnum->NumEnums() - 1; ++i)
 	{
-		if (InEnum->HasMetaData(TEXT("Hidden"), i))
-			continue;
-
 		const FString EnumName = InEnum->GetNameStringByIndex(i);
 		const FString CommandString = InFunctionName + TEXT(" ") + EnumName;
 
