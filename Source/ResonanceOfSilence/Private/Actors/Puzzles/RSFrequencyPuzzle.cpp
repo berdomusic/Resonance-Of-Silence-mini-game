@@ -61,6 +61,19 @@ void ARSFrequencyPuzzle::OnChargingCrystalPickup(ARSPickableItem* InCrystal)
 		PrizeItemSoft.Get()->GetActorLocation()
 	};
 	soundCrystal->SetupEffectsSpline(targetPointsForSpline);
+	
+	if (!GetWorld())
+		return;
+	
+	if (bPlayerOverlapsChargingSphere && soundCrystal->CanBeCharged())
+	{
+		OpenDoors();
+		StartCharging();
+	}
+	if (bPlayerOverlapsActivationSphere && soundCrystal->CanPlaySound())
+	{
+		OnSetCrystalPlayable.Broadcast(true);
+	}
 }
 
 void ARSFrequencyPuzzle::OnChargingCrystalDropped(ARSPickableItem* InCrystal)
@@ -171,7 +184,8 @@ void ARSFrequencyPuzzle::OnCrystalActivationSphereOverlap_Implementation(UPrimit
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (!URSCharacterFunctionLibrary::IsActorPlayerCharacter(OtherActor))
-		return;	
+		return;
+	bPlayerOverlapsActivationSphere = true;
 	if (!bPlayerHasCrystalEquipped)
 		return;
 	
@@ -183,6 +197,7 @@ void ARSFrequencyPuzzle::OnCrystalActivationSphereEndOverlap_Implementation(UPri
 {
 	if (!URSCharacterFunctionLibrary::IsActorPlayerCharacter(OtherActor))
 		return;
+	bPlayerOverlapsActivationSphere = false;
 	if (!bPlayerHasCrystalEquipped)
 		return;
 	

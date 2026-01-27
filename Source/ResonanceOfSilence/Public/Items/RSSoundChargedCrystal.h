@@ -81,11 +81,10 @@ public:
 	FRSDynamicMutlicastDelegate OnChargeFullyDepleted;
 	UPROPERTY(BlueprintAssignable)
 	FRSDynamicMutlicastDelegate OnMaxChargeValueReached;
-
+	bool CanPlaySound();
+	
 private:
 	bool bIsPlaying;
-	bool CanPlaySound();
-
 	bool bIsActivated;
 
 	bool bIsBeingCharged;

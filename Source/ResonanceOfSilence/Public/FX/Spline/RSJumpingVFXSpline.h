@@ -20,7 +20,7 @@ public:
 	void SetupJumpingSpline(const TArray<FVector>& InTargetPoints);	
 	
 	bool bCanJump = true;
-	
+
 	virtual void DeactivateVFX() override;
 
 	void OnChargeStarted();
@@ -45,9 +45,10 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FVector> TargetPoints;
 
-	float CurrentLerp;
+	const float LerpSpeedUnitsPerSecond = 750.f;
+	float CurrentLerpDistance;
+	float CurrentLerpValue;
 	bool bLerpVectors;
-
 	
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentStepIdx(int InIdx);

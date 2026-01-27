@@ -43,6 +43,8 @@ void URSJumpingVFXSpline::OnCrystalPlayableSet(bool bInPlayable)
 {
 	ARSSoundChargedCrystal* Crystal = Cast<ARSSoundChargedCrystal>(GetOwner());
 	check(IsValid(Crystal))
+	if (!Crystal->IsEquippedByPlayer())
+		return;
 	if(Crystal->IsChargeDepleted())
 	{
 		SetCurrentStepIdx(0);
@@ -92,7 +94,8 @@ void URSJumpingVFXSpline::SetNewPositionsForSplinePoints()
 	CurrentStart = CurrentTarget;
 	CurrentTarget = TargetPoints[CurrentStepIdx];
 
-	CurrentLerp = 0.f;
+	CurrentLerpValue = 0.f;
+	CurrentLerpDistance = FVector::Dist(CurrentStart, CurrentTarget);
 	bLerpVectors = true;
 }
 
@@ -117,20 +120,21 @@ void URSJumpingVFXSpline::TickComponent(float DeltaTime, ELevelTick TickType,
 	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
 	if(bLerpVectors)
 	{
-		CurrentLerp += DeltaTime / 2.0f;
-		CurrentLerp = FMath::Clamp(CurrentLerp, 0.0f, 1.0f);
+		const float LerpIncrement = (LerpSpeedUnitsPerSecond * DeltaTime) / CurrentLerpDistance;        
+		CurrentLerpValue += LerpIncrement;
+		CurrentLerpValue = FMath::Clamp(CurrentLerpValue, 0.0f, 1.0f);
 		
-		const FVector& currentLerpVector = UKismetMathLibrary::VLerp(CurrentStart, CurrentTarget, CurrentLerp);
-		bLerpVectors = CurrentLerp < 1.f;
+		const FVector& currentLerpVector = UKismetMathLibrary::VLerp(CurrentStart, CurrentTarget, CurrentLerpValue);
+		bLerpVectors = CurrentLerpValue < 1.f;
+		
 		PositionSplinePoints(currentLerpVector);
 	}
 	else
 	{
 		PositionSplinePoints(CurrentTarget);
-	}	
+	}   
 }
 
 void URSJumpingVFXSpline::EndPlay(const EEndPlayReason::Type EndPlayReason)

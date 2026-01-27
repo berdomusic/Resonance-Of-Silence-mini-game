@@ -54,6 +54,7 @@ protected:
 	bool bPlayerOverlapsChargingSphere;
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	UAudioComponent* ChargingSphereAudioComponent;	
+	bool bPlayerOverlapsActivationSphere;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	UStaticMeshComponent* CrystalActivationSphere;
